@@ -8,7 +8,6 @@
 </head>
 <body>
   <div class="container">
-
     <!-- Login Screen -->
     <div id="loginScreen">
       <h2>Welcome to MoodTrack</h2>
@@ -59,31 +58,10 @@
       <h3>Your Mood History</h3>
       <ul id="history"></ul>
 
-      <!-- Button to go to moods overview -->
-      <button onclick="showOverview()" style="margin-top: 1em;">See All Moods Overview</button>
+      <button onclick="goToOverview()">Mood Overview</button>
     </div>
-
-    <!-- Moods Overview Screen -->
-    <div id="overviewScreen" style="display: none;">
-      <h2>All Moods Overview</h2>
-      <table id="overviewTable" border="1" style="width: 100%; max-width: 600px; margin: auto; border-collapse: collapse;">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Mood</th>
-            <th>Date & Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Filled dynamically -->
-        </tbody>
-      </table>
-      <button onclick="backToMain()" style="margin-top: 1em;">Back to Mood Entry</button>
-    </div>
-
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
