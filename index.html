@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Daily Mood</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen">
+    <h1>Welcome to My Daily Mood</h1>
+
+    <label for="username">Enter your username:</label><br />
+    <input type="text" id="username" placeholder="Your name or username" /><br />
+
+    <label for="phoneEmail">Enter your email or phone number:</label><br />
+    <input type="text" id="phoneEmail" placeholder="Email or Phone" /><br />
+
+    <button id="loginBtn">Login</button>
+  </div>
+
+  <!-- APP SCREEN -->
+  <div id="appScreen" style="display:none;">
+    <h1 id="welcomeMessage"></h1>
+
+    <div class="moods">
+      <button onclick="selectMood('😊')">😊 Happy</button>
+      <button onclick="selectMood('😐')">😐 Neutral</button>
+      <button onclick="selectMood('😔')">😔 Sad</button>
+      <button onclick="selectMood('😡')">😡 Angry</button>
+      <button onclick="selectMood('😴')">😴 Tired</button>
+      <button onclick="selectMood('😰')">😰 Anxious</button>
+      <button onclick="selectMood('😁')">😁 Really Happy</button>
+      <button onclick="selectMood('💔')">💔 Heartbroken</button>
+      <button onclick="selectMood('🤢')">🤢 Disgusted</button>
+      <button onclick="selectMood('😍')">😍 In Love</button>
+    </div>
+
+    <div id="moodForm" style="display:none;">
+      <textarea id="comment" placeholder="Why do you feel this way? (optional)"></textarea><br />
+      <label>
+        <input type="checkbox" id="needHelp" />
+        I would like someone to check on me
+      </label><br />
+      <button onclick="saveMood()">Submit</button>
+    </div>
+
+    <h2>Mood History</h2>
+    <ul id="history"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

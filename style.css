@@ -1,0 +1,98 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 2em;
+  background: linear-gradient(135deg, #3a86ff, #9172ec);
+  color: white;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#loginScreen, #appScreen {
+  max-width: 400px;
+  margin: 0 auto;
+  background: rgba(255 255 255 / 0.1);
+  padding: 2em;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+}
+
+input[type="text"], textarea {
+  width: 90%;
+  padding: 0.6em;
+  margin-top: 0.3em;
+  margin-bottom: 1em;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+}
+
+button {
+  font-size: 1.2rem;
+  margin: 0.3em;
+  padding: 0.7em 1.5em;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  background: white;
+  color: #3a86ff;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(58, 134, 255, 0.5);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+  background: #2c6cd1;
+  color: white;
+}
+
+.moods button {
+  background: white;
+  color: #3a86ff;
+  border-radius: 15px;
+  padding: 0.5em 1em;
+  margin: 0.3em;
+  font-size: 1.4rem;
+  box-shadow: 0 3px 6px rgba(58, 134, 255, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.moods button:hover {
+  transform: scale(1.1);
+  background: #2c6cd1;
+  color: white;
+}
+
+textarea {
+  font-size: 1rem;
+  border-radius: 10px;
+  resize: vertical;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  color: white;
+  max-height: 200px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+li {
+  margin-bottom: 1em;
+  border-bottom: 1px solid rgba(255 255 255 / 0.3);
+  padding-bottom: 0.5em;
+}
+
+.helpNeeded {
+  background: white;
+  color: #333;
+  border-radius: 12px;
+  padding: 0.3em 0.8em;
+  display: inline-block;
+  font-weight: bold;
+  margin-top: 0.3em;
+}
