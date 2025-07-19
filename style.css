@@ -71,3 +71,21 @@ li {
   gap: 1em;
   margin: 2em 0;
 }
+
+
+.overview-entry {
+  cursor: pointer;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: white;
+  text-align: left;
+}
+
+.overview-details {
+  display: none;
+  margin-top: 0.5em;
+  padding-left: 1em;
+  font-size: 0.95em;
+}
