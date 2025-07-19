@@ -4,7 +4,95 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MoodTrack</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(to right, #4b0082, #0000ff); /* purple + blue */
+      color: white;
+      display: flex;
+      justify-content: center;
+      padding: 2em;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+    }
+
+    h2, h3 {
+      text-align: center;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.5em;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 1em;
+    }
+
+    button {
+      background-color: #ffffff;
+      color: #4b0082;
+      padding: 0.6em 1em;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 0.5em;
+    }
+
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5em;
+      margin: 1em 0;
+    }
+
+    .mood-grid button {
+      font-size: 1.2em;
+      background-color: #ffffffaa;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 1em;
+      margin-bottom: 1em;
+    }
+
+    .help-box {
+      background-color: rgba(255, 0, 0, 0.7);
+      padding: 0.5em;
+      margin-top: 0.5em;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .overview-entry {
+      cursor: pointer;
+      padding: 0.5em;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      margin-bottom: 1em;
+    }
+
+    .overview-details {
+      display: none;
+      font-size: 0.9em;
+      padding-top: 0.5em;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -67,6 +155,92 @@
 
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    let userInfo = {};
+    const allMoods = [];
+
+    function login() {
+      const contact = document.getElementById("contact").value.trim();
+      const username = document.getElementById("username").value.trim();
+
+      if (!contact || !username) {
+        alert("Please enter both your contact and username.");
+        return;
+      }
+
+      userInfo = { contact, username };
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("mainApp").style.display = "block";
+      document.getElementById("welcomeMessage").textContent = `Welcome, ${username}!`;
+    }
+
+    function selectMood(mood) {
+      userInfo.mood = mood;
+      document.getElementById("moodForm").style.display = "block";
+    }
+
+    function saveMood() {
+      const comment = document.getElementById("comment").value.trim();
+      const needHelp = document.getElementById("needHelp").checked;
+      const timestamp = new Date().toLocaleString();
+
+      const moodEntry = {
+        username: userInfo.username,
+        contact: userInfo.contact,
+        mood: userInfo.mood,
+        comment,
+        needHelp,
+        timestamp,
+      };
+
+      allMoods.push(moodEntry);
+
+      const historyItem = document.createElement("li");
+      historyItem.innerHTML = `
+        <strong>${moodEntry.mood}</strong> — ${moodEntry.timestamp}
+        ${comment ? `<br>Comment: ${comment}` : ""}
+        ${needHelp ? `<div class="help-box">Needs someone to check in.</div>` : ""}
+      `;
+      document.getElementById("history").prepend(historyItem);
+
+      // Reset form
+      document.getElementById("comment").value = "";
+      document.getElementById("needHelp").checked = false;
+      document.getElementById("moodForm").style.display = "none";
+    }
+
+    function goToOverview() {
+      document.getElementById("mainApp").style.display = "none";
+      document.getElementById("overviewScreen").style.display = "block";
+
+      const list = document.getElementById("overviewList");
+      list.innerHTML = "";
+
+      allMoods.forEach((entry, index) => {
+        const li = document.createElement("li");
+        li.className = "overview-entry";
+        li.innerHTML = `
+          <strong>${entry.username}</strong> — ${entry.mood} <span style="font-size: 0.85em;">(${entry.timestamp})</span>
+          <div class="overview-details" id="details-${index}">
+            ${entry.comment ? `<p><strong>Comment:</strong> ${entry.comment}</p>` : ""}
+            ${entry.needHelp ? `<p class="help-box">Needs someone to check in</p>` : ""}
+            <p><strong>Contact:</strong> ${entry.contact}</p>
+          </div>
+        `;
+
+        li.addEventListener("click", () => {
+          const detailBox = document.getElementById(`details-${index}`);
+          detailBox.style.display = detailBox.style.display === "block" ? "none" : "block";
+        });
+
+        list.appendChild(li);
+      });
+    }
+
+    function backToMain() {
+      document.getElementById("overviewScreen").style.display = "none";
+      document.getElementById("mainApp").style.display = "block";
+    }
+  </script>
 </body>
 </html>
