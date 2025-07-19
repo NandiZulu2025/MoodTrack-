@@ -1,98 +1,55 @@
+/* Base setup */
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   text-align: center;
-  padding: 2em;
-  background: linear-gradient(135deg, #3a86ff, #9172ec);
-  color: white;
-  min-height: 100vh;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 2em 1em;
+  min-height: 100vh;
+  /* More intense blue and purple gradient */
+  background: linear-gradient(135deg, #1e40af, #6b21a8);
+  color: white;
 }
 
-#loginScreen, #appScreen {
-  max-width: 400px;
-  margin: 0 auto;
-  background: rgba(255 255 255 / 0.1);
-  padding: 2em;
-  border-radius: 15px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.25);
-}
-
-input[type="text"], textarea {
-  width: 90%;
-  padding: 0.6em;
-  margin-top: 0.3em;
-  margin-bottom: 1em;
+/* Inputs & Textareas */
+input, textarea {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.75em;
+  margin: 0.5em auto 1em auto;
+  display: block;
+  border: none;
   border-radius: 8px;
-  border: none;
-  font-size: 1rem;
+  font-size: 1em;
 }
 
+/* Buttons */
 button {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin: 0.3em;
-  padding: 0.7em 1.5em;
-  border-radius: 25px;
+  padding: 0.6em 1.2em;
   border: none;
-  cursor: pointer;
-  background: white;
-  color: #3a86ff;
+  border-radius: 8px;
+  background-color: white;
+  color: #3b82f6;
   font-weight: bold;
-  box-shadow: 0 4px 8px rgba(58, 134, 255, 0.5);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
 button:hover {
-  background: #2c6cd1;
-  color: white;
+  background-color: #f0f0f0;
 }
 
-.moods button {
-  background: white;
-  color: #3a86ff;
-  border-radius: 15px;
-  padding: 0.5em 1em;
-  margin: 0.3em;
-  font-size: 1.4rem;
-  box-shadow: 0 3px 6px rgba(58, 134, 255, 0.4);
-  transition: transform 0.2s ease;
-}
-
-.moods button:hover {
-  transform: scale(1.1);
-  background: #2c6cd1;
-  color: white;
-}
-
-textarea {
-  font-size: 1rem;
-  border-radius: 10px;
-  resize: vertical;
-}
-
+/* Mood history list */
 ul {
   list-style: none;
   padding: 0;
-  color: white;
-  max-height: 200px;
-  overflow-y: auto;
-  text-align: left;
+  margin-top: 1em;
 }
 
 li {
-  margin-bottom: 1em;
-  border-bottom: 1px solid rgba(255 255 255 / 0.3);
-  padding-bottom: 0.5em;
-}
-
-.helpNeeded {
-  background: white;
-  color: #333;
-  border-radius: 12px;
-  padding: 0.3em 0.8em;
-  display: inline-block;
-  font-weight: bold;
-  margin-top: 0.3em;
-}
+  background: rgba(
