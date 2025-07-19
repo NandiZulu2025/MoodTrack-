@@ -1,82 +1,86 @@
-let selectedMood = "";
+let userInfo = {};
+let userMoodHistory = []; // store all moods saved for demo overview
+
+function login() {
+  const contact = document.getElementById("contact").value.trim();
+  const username = document.getElementById("username").value.trim();
+
+  if (contact === "" || username === "") {
+    alert("Please enter both your contact and username.");
+    return;
+  }
+
+  userInfo = {
+    contact,
+    username
+  };
+
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("mainApp").style.display = "block";
+  document.getElementById("welcomeMessage").textContent = `Welcome, ${username}!`;
+}
 
 function selectMood(mood) {
-  selectedMood = mood;
+  userInfo.mood = mood;
   document.getElementById("moodForm").style.display = "block";
 }
 
 function saveMood() {
-  const today = new Date().toLocaleDateString();
   const comment = document.getElementById("comment").value.trim();
   const needHelp = document.getElementById("needHelp").checked;
+  const timestamp = new Date().toLocaleString();
 
-  const entry = {
-    date: today,
-    mood: selectedMood,
-    comment: comment,
-    needHelp: needHelp
-  };
+  // Save this mood with user info in history array
+  userMoodHistory.unshift({
+    username: userInfo.username,
+    mood: userInfo.mood,
+    timestamp,
+    comment,
+    needHelp
+  });
 
-  let history = JSON.parse(localStorage.getItem("moodHistory")) || [];
-  history.unshift(entry);
-  localStorage.setItem("moodHistory", JSON.stringify(history));
+  // Also add to visible personal history list
+  const historyItem = document.createElement("li");
+  let content = `<strong>${userInfo.mood}</strong> — ${timestamp}`;
+  if (comment) content += `<br>Comment: ${comment}`;
+  if (needHelp) content += `<div class="help-box">Needs someone to check in.</div>`;
+  historyItem.innerHTML = content;
+  document.getElementById("history").prepend(historyItem);
 
-  // Reset form
+  // Clear form and hide
   document.getElementById("comment").value = "";
   document.getElementById("needHelp").checked = false;
   document.getElementById("moodForm").style.display = "none";
-
-  showHistory();
 }
 
-function showHistory() {
-  const list = document.getElementById("history");
-  list.innerHTML = "";
-  const history = JSON.parse(localStorage.getItem("moodHistory")) || [];
+// Show overview screen
+function showOverview() {
+  document.getElementById("mainApp").style.display = "none";
+  document.getElementById("overviewScreen").style.display = "block";
 
-  history
-    .filter(item => item && item.date && item.mood)
-    .forEach(item => {
-      const li = document.createElement("li");
-      li.innerHTML = `<strong>${item.date}:</strong> ${item.mood}<br />
-        ${item.comment ? `<em>“${item.comment}”</em><br />` : ""}
-        ${item.needHelp ? `<span class="helpNeeded">⚠️ Needs someone to check in.</span>` : ""}`;
-      list.appendChild(li);
-    });
+  // Fill table
+  const tbody = document.querySelector("#overviewTable tbody");
+  tbody.innerHTML = ""; // clear previous
+
+  // For demo, add a few static entries + current userMoodHistory
+  const demoData = [
+    { username: "Alice", mood: "😄 Excited", timestamp: "2025-07-18 10:00 AM" },
+    { username: "Bob", mood: "😔 Sad", timestamp: "2025-07-18 11:15 AM" },
+    { username: "Charlie", mood: "❤️ In Love", timestamp: "2025-07-18 12:30 PM" },
+  ];
+
+  const allData = [...userMoodHistory, ...demoData];
+
+  allData.forEach(entry => {
+    const row = document.createElement("tr");
+    row.innerHTML = `<td>${entry.username}</td><td>${entry.mood}</td><td>${entry.timestamp}</td>`;
+    tbody.appendChild(row);
+  });
 }
 
-function init() {
-  const username = localStorage.getItem("username");
-  const phoneEmail = localStorage.getItem("phoneEmail");
-
-  if (username && phoneEmail) {
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("appScreen").style.display = "block";
-    document.getElementById("welcomeMessage").textContent = `Welcome, ${username}`;
-    showHistory();
-  }
+// Back to main mood screen
+function backToMain() {
+  document.getElementById("overviewScreen").style.display = "none";
+  document.getElementById("mainApp").style.display = "block";
 }
 
-// Login button handler
-document.getElementById("loginBtn").addEventListener("click", () => {
-  const usernameInput = document.getElementById("username").value.trim();
-  const phoneEmailInput = document.getElementById("phoneEmail").value.trim();
-
-  if (!usernameInput || !phoneEmailInput) {
-    alert("Please enter both username and email or phone number.");
-    return;
-  }
-
-  localStorage.setItem("username", usernameInput);
-  localStorage.setItem("phoneEmail", phoneEmailInput);
-
-  // Show app screen, hide login screen
-  document.getElementById("loginScreen").style.display = "none";
-  document.getElementById("appScreen").style.display = "block";
-
-  document.getElementById("welcomeMessage").textContent = `Welcome, ${usernameInput}`;
-  showHistory();
-});
-
-// Initialize app on load
-init();
