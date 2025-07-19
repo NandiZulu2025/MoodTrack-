@@ -8,6 +8,7 @@
 </head>
 <body>
   <div class="container">
+
     <!-- Login Screen -->
     <div id="loginScreen">
       <h2>Welcome to MoodTrack</h2>
@@ -20,46 +21,50 @@
       <button onclick="login()">Login</button>
     </div>
 
-    <!-- Main App -->
+    <!-- Main App Screen -->
     <div id="mainApp" style="display: none;">
       <h2 id="welcomeMessage"></h2>
 
-      <p>How are you feeling today? Select the emoji that matches your mood:</p>
+      <p>How are you feeling today?</p>
 
       <div class="mood-grid">
-        <button onclick="selectMood('🥳 Very Very Happy')" title="Overflowing with joy">🥳<br>Celebrating</button>
-        <button onclick="selectMood('😔 Sad')" title="Feeling down">😔<br>Sad</button>
-        <button onclick="selectMood('😠 Angry')" title="Frustrated or mad">😠<br>Angry</button>
-        <button onclick="selectMood('😰 Anxious')" title="Nervous or stressed">😰<br>Anxious</button>
-        <button onclick="selectMood('😱 Scared')" title="Frightened or uneasy">😱<br>Scared</button>
-        <button onclick="selectMood('😴 Tired')" title="Exhausted or sleepy">😴<br>Tired</button>
-        <button onclick="selectMood('😄 Excited')" title="Looking forward to something">😄<br>Excited</button>
-        <button onclick="selectMood('🤒 Sick')" title="Not feeling well">🤒<br>Sick</button>
-        <button onclick="selectMood('🤩 Proud')" title="Accomplished something">🤩<br>Proud</button>
-        <button onclick="selectMood('😕 Confused')" title="Need clarity">😕<br>Confused</button>
-        <button onclick="selectMood('❤️ In Love')" title="Heart full of love">❤️<br>In Love</button>
+        <button onclick="selectMood('🥳 Very Very Happy')">🥳<br>Happy</button>
+        <button onclick="selectMood('😔 Sad')">😔<br>Sad</button>
+        <button onclick="selectMood('😠 Angry')">😠<br>Angry</button>
+        <button onclick="selectMood('😰 Anxious')">😰<br>Anxious</button>
+        <button onclick="selectMood('😱 Scared')">😱<br>Scared</button>
+        <button onclick="selectMood('😴 Tired')">😴<br>Tired</button>
+        <button onclick="selectMood('😄 Excited')">😄<br>Excited</button>
+        <button onclick="selectMood('🤒 Sick')">🤒<br>Sick</button>
+        <button onclick="selectMood('🤩 Proud')">🤩<br>Proud</button>
+        <button onclick="selectMood('😕 Confused')">😕<br>Confused</button>
+        <button onclick="selectMood('❤️ In Love')">❤️<br>Love</button>
       </div>
 
       <!-- Comment Form -->
       <div id="moodForm" style="display: none;">
         <h3>Tell us more</h3>
-        <label for="comment">Comment (optional):</label>
         <textarea id="comment" rows="3" placeholder="Why are you feeling this way?"></textarea>
-
         <label>
           <input type="checkbox" id="needHelp" />
           I’d like someone to check in with me
         </label>
-
         <button onclick="saveMood()">Save</button>
       </div>
 
-      <!-- Mood History -->
       <h3>Your Mood History</h3>
       <ul id="history"></ul>
 
       <button onclick="goToOverview()">Mood Overview</button>
     </div>
+
+    <!-- Mood Overview Screen -->
+    <div id="overviewScreen" style="display: none;">
+      <h2>Team Mood Overview</h2>
+      <ul id="overviewList"></ul>
+      <button onclick="backToMain()">⬅ Back</button>
+    </div>
+
   </div>
 
   <script src="script.js"></script>
