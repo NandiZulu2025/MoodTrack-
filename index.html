@@ -1,313 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MoodTrack</title>
-  <style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MoodTrack</title>
+<style>
+
     body {
+
       margin: 0;
+
       font-family: "Segoe UI", sans-serif;
+
       font-size:18px;
+
       background: linear-gradient(to right, #667eea, #764ba2); 
+
       color: white;
+
       display: flex;
+
       justify-content: center;
+
       padding: 2em;
+
     }
 
-    .container {
-      max-width: 600px;
-      width: 100%;
-    }
+    .container { max-width: 600px; width: 100%; }
 
-    h2, h3 {
-      text-align: left;
-    }
+    h2, h3 { text-align: left; }
 
     input, textarea {
+
       width: 80%;
+
       padding: 1em;
+
       border-radius: 4px;
+
       border: none;
+
       margin-bottom: 1em;
+
       font-size: 1em;
+
     }
 
-button {
-    color: #ffffff;
-    padding: 0.8em 0.2em;
-    font-weight: bold;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 0.5em;
-    font-size: 1em;
-    background-image: linear-gradient(-135deg, #00d2ff 0%, #3a7bd5  100%)
-}
+    button {
 
+      color: #ffffff;
+
+      padding: 0.8em 0.2em;
+
+      font-weight: bold;
+
+      border: none;
+
+      border-radius: 4px;
+
+      cursor: pointer;
+
+      margin-top: 0.5em;
+
+      font-size: 1em;
+
+      background-image: linear-gradient(-135deg, #00d2ff 0%, #3a7bd5  100%);
+
+    }
 
     .mood-grid {
+
       display: grid;
+
       grid-template-columns: repeat(3, 1fr);
+
       gap: 0.5em;
+
       margin: 1em 0;
+
     }
 
-.mood-grid button.emoMood {
-    font-size: 1.2em;
-    background: #ffffff;
-    border-radius: 8px;
-    color: #5f5aa2;
-}
+    .mood-grid button.emoMood {
 
+      font-size: 1.2em;
 
-.mood-grid button.emoMood:hover {
-    font-size: 1.2em;
-    background: #5f5aa2;
-    border-radius: 8px;
-    color: #ffffff;
-}
+      background: #ffffff;
 
-    ul {
-      list-style: none;
-      padding: 0;
+      border-radius: 8px;
+
+      color: #5f5aa2;
+
     }
+
+    .mood-grid button.emoMood:hover {
+
+      background: #5f5aa2;
+
+      color: #ffffff;
+
+    }
+
+    ul { list-style: none; padding: 0; }
 
     li {
+
       background: rgba(255, 255, 255, 0.1);
+
       border-radius: 10px;
+
       padding: 1em;
+
       margin-bottom: 1em;
+
     }
 
     .help-box {
+
       background-color: rgba(255, 0, 0, 0.7);
+
       padding: 0.5em;
+
       margin-top: 0.5em;
+
       border-radius: 6px;
+
       font-weight: bold;
+
     }
 
     .overview-entry {
+
       cursor: pointer;
+
       padding: 0.5em;
+
       background: rgba(255, 255, 255, 0.15);
+
       border-radius: 10px;
+
       margin-bottom: 1em;
+
     }
 
     .overview-details {
+
       display: none;
+
       font-size: 0.9em;
+
       padding-top: 0.5em;
+
     }
 
-    textarea {
-      resize: vertical;
-    }
+    textarea { resize: vertical; }
 
-    #loginScreen {
-        margin: auto;
-    }
+    #loginScreen { margin: auto; }
 
-.checkMe {
-    display: block;
-    margin: 10px 0;
-    background-color: #ef476f;
-    text-align: center;
-    font-weight: 800;
-    padding: 0.8em;
-}
+    .checkMe {
+
+      display: block;
+
+      margin: 10px 0;
+
+      background-color: #ef476f;
+
+      text-align: center;
+
+      font-weight: 800;
+
+      padding: 0.8em;
+
+    }
 
     .checkMe input {
-    width: auto;
-    border-radius: 4px;
-    border: none;
-    margin-bottom: 0.2em;
-    font-size: 1.5em;
-}
-  </style>
 
-  <!-- Firebase App (core) SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+      width: auto;
 
-<!-- Firestore (Database) SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+      border-radius: 4px;
 
-<script>
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyA57G-zVzyux3UR5LtfkiDrpEOnlmjhplw",
-    authDomain: "moodi-191cd.firebaseapp.com",
-    projectId: "moodi-191cd",
-    storageBucket: "moodi-191cd.firebasestorage.app",
-    messagingSenderId: "845337317631",
-    appId: "1:845337317631:web:1820d7a3c37f146d70bcca"
-  };
+      border: none;
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-</script>
+      margin-bottom: 0.2em;
 
+      font-size: 1.5em;
+
+    }
+</style>
 </head>
 <body>
-  <div class="container">
+<div class="container">
+ 
+  <!-- Login Screen -->
+<div id="loginScreen">
+<h2>Moodi</h2>
+<input type="text" id="contact" placeholder="you@example.com or +123456789" />
+<input type="text" id="username" placeholder="Username" />
+<button onclick="login()">Login</button>
+</div>
+ 
+  <!-- Main App Screen -->
+<div id="mainApp" style="display: none;">
+<h2 id="welcomeMessage"></h2>
+<p>How are you feeling today?</p>
+ 
+    <div class="mood-grid">
+<button class="emoMood" onclick="selectMood('🥳 Very Very Happy')">🥳<br>Happy</button>
+<button class="emoMood" onclick="selectMood('😔 Sad')">😔<br>Sad</button>
+<button class="emoMood" onclick="selectMood('😠 Angry')">😠<br>Angry</button>
+<button class="emoMood" onclick="selectMood('😰 Anxious')">😰<br>Anxious</button>
+<button class="emoMood" onclick="selectMood('😱 Scared')">😱<br>Scared</button>
+<button class="emoMood" onclick="selectMood('😴 Tired')">😴<br>Tired</button>
+<button class="emoMood" onclick="selectMood('😄 Excited')">😄<br>Excited</button>
+<button class="emoMood" onclick="selectMood('🤒 Sick')">🤒<br>Sick</button>
+<button class="emoMood" onclick="selectMood('🤩 Proud')">🤩<br>Proud</button>
+<button class="emoMood" onclick="selectMood('😕 Confused')">😕<br>Confused</button>
+<button class="emoMood" onclick="selectMood('❤️ In Love')">❤️<br>Love</button>
+</div>
+ 
+    <div id="moodForm" style="display: none;">
+<h3>Why are you feeling this way?</h3>
+<textarea id="comment" rows="3" placeholder=""></textarea>
+<div class="checkMe">
+<label>
+<input type="checkbox" id="needHelp" />
 
-    <!-- Login Screen -->
-    <div id="loginScreen">
-      <h2>Moodi</h2>
-      <!-- <label for="contact">Email or Phone Number:</label> -->
-      <input type="text" id="contact" placeholder="you@example.com or +123456789" />
+          I’d like someone to check in with me
+</label>
+</div>
+<button onclick="saveMood()">Save</button>
+</div>
+ 
+    <h3>Your Mood History</h3>
+<ul id="history"></ul>
+<button onclick="goToOverview()">Mood Overview</button>
+</div>
+ 
+  <!-- Mood Overview Screen -->
+<div id="overviewScreen" style="display: none;">
+<h2>Team Mood Overview</h2>
+<ul id="overviewList"></ul>
+<button onclick="backToMain()">⬅ Back</button>
+</div>
+</div>
+ 
+<!-- Firebase Scripts (v10+) -->
+<script type="module">
 
-      <!-- <label for="username">Username:</label>-->
-      <input type="text" id="username" placeholder="Username" />
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
-      <button onclick="login()">Login</button>
-    </div>
+  import {
 
-    <!-- Main App Screen -->
-    <div id="mainApp" style="display: none;">
-      <h2 id="welcomeMessage"></h2>
+    getFirestore,
 
-      <p>How are you feeling today?</p>
+    collection,
 
-      <div class="mood-grid">
-        <button class="emoMood" onclick="selectMood('🥳 Very Very Happy')">🥳<br>Happy</button>
-        <button class="emoMood" onclick="selectMood('😔 Sad')">😔<br>Sad</button>
-        <button class="emoMood" onclick="selectMood('😠 Angry')">😠<br>Angry</button>
-        <button class="emoMood" onclick="selectMood('😰 Anxious')">😰<br>Anxious</button>
-        <button class="emoMood" onclick="selectMood('😱 Scared')">😱<br>Scared</button>
-        <button class="emoMood" onclick="selectMood('😴 Tired')">😴<br>Tired</button>
-        <button class="emoMood" onclick="selectMood('😄 Excited')">😄<br>Excited</button>
-        <button class="emoMood" onclick="selectMood('🤒 Sick')">🤒<br>Sick</button>
-        <button class="emoMood" onclick="selectMood('🤩 Proud')">🤩<br>Proud</button>
-        <button class="emoMood" onclick="selectMood('😕 Confused')">😕<br>Confused</button>
-        <button class="emoMood" onclick="selectMood('❤️ In Love')">❤️<br>Love</button>
-      </div>
+    addDoc,
 
-      <!-- Comment Form -->
-      <div id="moodForm" style="display: none;">
-        <h3>Why are you feeling this way ?</h3>
-        <textarea id="comment" rows="3" placeholder=""></textarea>
-        <div class="checkMe">
-          <label>
-            <input class="" type="checkbox" id="needHelp" />
-            I’d like someone to check in with me
-          </label>
-         </div>
-        <button onclick="saveMood()">Save</button>
-      </div>
+    getDocs,
 
-      <h3>Your Mood History</h3>
-      <ul id="history"></ul>
+    query,
 
-      <button onclick="goToOverview()">Mood Overview</button>
-    </div>
+    orderBy
 
-    <!-- Mood Overview Screen -->
-    <div id="overviewScreen" style="display: none;">
-      <h2>Team Mood Overview</h2>
-      <ul id="overviewList"></ul>
-      <button onclick="backToMain()">⬅ Back</button>
-    </div>
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+ 
+  const firebaseConfig = {
 
-  </div>
+    apiKey: "AIzaSyA57G-zVzyux3UR5LtfkiDrpEOnlmjhplw",
 
-  <script>
-    let userInfo = {};
-    const allMoods = [];
+    authDomain: "moodi-191cd.firebaseapp.com",
 
-    function login() {
-      const contact = document.getElementById("contact").value.trim();
-      const username = document.getElementById("username").value.trim();
+    projectId: "moodi-191cd",
 
-      if (!contact || !username) {
-        alert("Please enter both your contact and username.");
-        return;
-      }
+    storageBucket: "moodi-191cd.appspot.com",
 
-      userInfo = { contact, username };
-      document.getElementById("loginScreen").style.display = "none";
-      document.getElementById("mainApp").style.display = "block";
-      document.getElementById("welcomeMessage").textContent = `Welcome, ${username}!`;
+    messagingSenderId: "845337317631",
+
+    appId: "1:845337317631:web:1820d7a3c37f146d70bcca"
+
+  };
+ 
+  const app = initializeApp(firebaseConfig);
+
+  const db = getFirestore(app);
+ 
+  let userInfo = {};
+
+  const allMoods = [];
+ 
+  window.login = function () {
+
+    const contact = document.getElementById("contact").value.trim();
+
+    const username = document.getElementById("username").value.trim();
+
+    if (!contact || !username) {
+
+      alert("Please enter both your contact and username.");
+
+      return;
+
     }
 
-    function selectMood(mood) {
-      userInfo.mood = mood;
-      document.getElementById("moodForm").style.display = "block";
-    }
+    userInfo = { contact, username };
 
-    function saveMood() {
-      const comment = document.getElementById("comment").value.trim();
-      const needHelp = document.getElementById("needHelp").checked;
-      const timestamp = new Date().toLocaleString();
+    document.getElementById("loginScreen").style.display = "none";
 
-      const moodEntry = {
-        username: userInfo.username,
-        contact: userInfo.contact,
-        mood: userInfo.mood,
-        comment,
-        needHelp,
-        timestamp,
-      };
+    document.getElementById("mainApp").style.display = "block";
 
-      allMoods.push(moodEntry);
+    document.getElementById("welcomeMessage").textContent = `Welcome, ${username}!`;
 
-      db.collection("moods").add(moodEntry)
-  .then(() => console.log("Mood saved to Firestore"))
-  .catch((error) => console.error("Error saving mood:", error));
+  };
+ 
+  window.selectMood = function (mood) {
 
+    userInfo.mood = mood;
 
+    document.getElementById("moodForm").style.display = "block";
+
+  };
+ 
+  window.saveMood = async function () {
+
+    const comment = document.getElementById("comment").value.trim();
+
+    const needHelp = document.getElementById("needHelp").checked;
+
+    const timestamp = new Date().toLocaleString();
+ 
+    const moodEntry = {
+
+      username: userInfo.username,
+
+      contact: userInfo.contact,
+
+      mood: userInfo.mood,
+
+      comment,
+
+      needHelp,
+
+      timestamp,
+
+    };
+ 
+    try {
+
+      await addDoc(collection(db, "moods"), moodEntry);
+
+      console.log("Mood saved to Firestore");
+ 
       const historyItem = document.createElement("li");
+
       historyItem.innerHTML = `
-        <strong>${moodEntry.mood}</strong> — ${moodEntry.timestamp}
+<strong>${moodEntry.mood}</strong> — ${moodEntry.timestamp}
+
         ${comment ? `<br>Comment: ${comment}` : ""}
+
         ${needHelp ? `<div class="help-box">Needs someone to check in.</div>` : ""}
+
       `;
+
       document.getElementById("history").prepend(historyItem);
-
+ 
       // Reset form
+
       document.getElementById("comment").value = "";
+
       document.getElementById("needHelp").checked = false;
+
       document.getElementById("moodForm").style.display = "none";
+
+    } catch (error) {
+
+      console.error("Error saving mood:", error);
+
     }
 
-function goToOverview() {
-  document.getElementById("mainApp").style.display = "none";
-  document.getElementById("overviewScreen").style.display = "block";
+  };
+ 
+  window.goToOverview = async function () {
 
-  const list = document.getElementById("overviewList");
-  list.innerHTML = "";
+    document.getElementById("mainApp").style.display = "none";
 
-  db.collection("moods").orderBy("timestamp", "desc").get().then((querySnapshot) => {
+    document.getElementById("overviewScreen").style.display = "block";
+ 
+    const list = document.getElementById("overviewList");
+
+    list.innerHTML = "";
+ 
+    const q = query(collection(db, "moods"), orderBy("timestamp", "desc"));
+
+    const querySnapshot = await getDocs(q);
+ 
     querySnapshot.forEach((doc, index) => {
+
       const entry = doc.data();
+
       const li = document.createElement("li");
+
       li.className = "overview-entry";
+
       li.innerHTML = `
-        <strong>${entry.username}</strong> — ${entry.mood} <span style="font-size: 0.85em;">(${entry.timestamp})</span>
-        <div class="overview-details" id="details-${index}">
+<strong>${entry.username}</strong> — ${entry.mood} <span style="font-size: 0.85em;">(${entry.timestamp})</span>
+<div class="overview-details" id="details-${index}">
+
           ${entry.comment ? `<p><strong>Comment:</strong> ${entry.comment}</p>` : ""}
+
           ${entry.needHelp ? `<p class="help-box">Needs someone to check in</p>` : ""}
-          <p><strong>Contact:</strong> ${entry.contact}</p>
-        </div>
+<p><strong>Contact:</strong> ${entry.contact}</p>
+</div>
+
       `;
+
       li.addEventListener("click", () => {
+
         const detailBox = document.getElementById(`details-${index}`);
+
         detailBox.style.display = detailBox.style.display === "block" ? "none" : "block";
+
       });
+
       list.appendChild(li);
+
     });
-  });
-}
 
+  };
+ 
+  window.backToMain = function () {
 
-    function backToMain() {
-      document.getElementById("overviewScreen").style.display = "none";
-      document.getElementById("mainApp").style.display = "block";
-    }
-  </script>
+    document.getElementById("overviewScreen").style.display = "none";
+
+    document.getElementById("mainApp").style.display = "block";
+
+  };
+</script>
 </body>
 </html>
+
+ 
