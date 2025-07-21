@@ -8,7 +8,8 @@
     body {
       margin: 0;
       font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(to right, #4b0082, #0000ff); /* purple + blue */
+      font-size:18px;
+      background: linear-gradient(to right, #667eea, #764ba2); 
       color: white;
       display: flex;
       justify-content: center;
@@ -21,27 +22,30 @@
     }
 
     h2, h3 {
-      text-align: center;
+      text-align: left;
     }
 
     input, textarea {
-      width: 100%;
-      padding: 0.5em;
-      border-radius: 8px;
+      width: 80%;
+      padding: 1em;
+      border-radius: 4px;
       border: none;
       margin-bottom: 1em;
+      font-size: 1em;
     }
 
-    button {
-      background-color: #ffffff;
-      color: #4b0082;
-      padding: 0.6em 1em;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 0.5em;
-    }
+button {
+    color: #ffffff;
+    padding: 0.8em 1.5em;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 0.5em;
+    font-size: 1em;
+    background-image: linear-gradient(-135deg, #00d2ff 0%, #3a7bd5  100%)
+}
+
 
     .mood-grid {
       display: grid;
@@ -50,10 +54,20 @@
       margin: 1em 0;
     }
 
-    .mood-grid button {
-      font-size: 1.2em;
-      background-color: #ffffffaa;
-    }
+.mood-grid button.emoMood {
+    font-size: 1.2em;
+    background: #ffffff;
+    border-radius: 8px;
+    color: #5f5aa2;
+}
+
+
+.mood-grid button.emoMood:hover {
+    font-size: 1.2em;
+    background: #5f5aa2;
+    border-radius: 8px;
+    color: #ffffff;
+}
 
     ul {
       list-style: none;
@@ -92,6 +106,27 @@
     textarea {
       resize: vertical;
     }
+
+    #loginScreen {
+        margin: auto;
+    }
+
+.checkMe {
+    display: block;
+    margin: 10px 0;
+    background-color: #ef476f;
+    text-align: center;
+    font-weight: 800;
+    padding: 0.8em;
+}
+
+    .checkMe input {
+    width: auto;
+    border-radius: 4px;
+    border: none;
+    margin-bottom: 0.2em;
+    font-size: 1.5em;
+}
   </style>
 </head>
 <body>
@@ -99,12 +134,12 @@
 
     <!-- Login Screen -->
     <div id="loginScreen">
-      <h2>Welcome to MoodTrack</h2>
-      <label for="contact">Email or Phone Number:</label>
+      <h2>Moodi</h2>
+      <!-- <label for="contact">Email or Phone Number:</label> -->
       <input type="text" id="contact" placeholder="you@example.com or +123456789" />
 
-      <label for="username">Username:</label>
-      <input type="text" id="username" placeholder="Your name or nickname" />
+      <!-- <label for="username">Username:</label>-->
+      <input type="text" id="username" placeholder="Username" />
 
       <button onclick="login()">Login</button>
     </div>
@@ -116,27 +151,29 @@
       <p>How are you feeling today?</p>
 
       <div class="mood-grid">
-        <button onclick="selectMood('🥳 Very Very Happy')">🥳<br>Happy</button>
-        <button onclick="selectMood('😔 Sad')">😔<br>Sad</button>
-        <button onclick="selectMood('😠 Angry')">😠<br>Angry</button>
-        <button onclick="selectMood('😰 Anxious')">😰<br>Anxious</button>
-        <button onclick="selectMood('😱 Scared')">😱<br>Scared</button>
-        <button onclick="selectMood('😴 Tired')">😴<br>Tired</button>
-        <button onclick="selectMood('😄 Excited')">😄<br>Excited</button>
-        <button onclick="selectMood('🤒 Sick')">🤒<br>Sick</button>
-        <button onclick="selectMood('🤩 Proud')">🤩<br>Proud</button>
-        <button onclick="selectMood('😕 Confused')">😕<br>Confused</button>
-        <button onclick="selectMood('❤️ In Love')">❤️<br>Love</button>
+        <button class="emoMood" onclick="selectMood('🥳 Very Very Happy')">🥳<br>Happy</button>
+        <button class="emoMood" onclick="selectMood('😔 Sad')">😔<br>Sad</button>
+        <button class="emoMood" onclick="selectMood('😠 Angry')">😠<br>Angry</button>
+        <button class="emoMood" onclick="selectMood('😰 Anxious')">😰<br>Anxious</button>
+        <button class="emoMood" onclick="selectMood('😱 Scared')">😱<br>Scared</button>
+        <button class="emoMood" onclick="selectMood('😴 Tired')">😴<br>Tired</button>
+        <button class="emoMood" onclick="selectMood('😄 Excited')">😄<br>Excited</button>
+        <button class="emoMood" onclick="selectMood('🤒 Sick')">🤒<br>Sick</button>
+        <button class="emoMood" onclick="selectMood('🤩 Proud')">🤩<br>Proud</button>
+        <button class="emoMood" onclick="selectMood('😕 Confused')">😕<br>Confused</button>
+        <button class="emoMood" onclick="selectMood('❤️ In Love')">❤️<br>Love</button>
       </div>
 
       <!-- Comment Form -->
       <div id="moodForm" style="display: none;">
-        <h3>Tell us more</h3>
-        <textarea id="comment" rows="3" placeholder="Why are you feeling this way?"></textarea>
-        <label>
-          <input type="checkbox" id="needHelp" />
-          I’d like someone to check in with me
-        </label>
+        <h3>Why are you feeling this way ?</h3>
+        <textarea id="comment" rows="3" placeholder=""></textarea>
+        <div class="checkMe">
+          <label>
+            <input class="" type="checkbox" id="needHelp" />
+            I’d like someone to check in with me
+          </label>
+         </div>
         <button onclick="saveMood()">Save</button>
       </div>
 
