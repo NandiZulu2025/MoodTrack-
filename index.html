@@ -49,7 +49,7 @@ button {
 
     .mood-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 0.5em;
       margin: 1em 0;
     }
@@ -128,6 +128,29 @@ button {
     font-size: 1.5em;
 }
   </style>
+
+  <!-- Firebase App (core) SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+
+<!-- Firestore (Database) SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyA57G-zVzyux3UR5LtfkiDrpEOnlmjhplw",
+    authDomain: "moodi-191cd.firebaseapp.com",
+    projectId: "moodi-191cd",
+    storageBucket: "moodi-191cd.firebasestorage.app",
+    messagingSenderId: "845337317631",
+    appId: "1:845337317631:web:1820d7a3c37f146d70bcca"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+
 </head>
 <body>
   <div class="container">
@@ -232,6 +255,11 @@ button {
 
       allMoods.push(moodEntry);
 
+      db.collection("moods").add(moodEntry)
+  .then(() => console.log("Mood saved to Firestore"))
+  .catch((error) => console.error("Error saving mood:", error));
+
+
       const historyItem = document.createElement("li");
       historyItem.innerHTML = `
         <strong>${moodEntry.mood}</strong> — ${moodEntry.timestamp}
@@ -246,33 +274,35 @@ button {
       document.getElementById("moodForm").style.display = "none";
     }
 
-    function goToOverview() {
-      document.getElementById("mainApp").style.display = "none";
-      document.getElementById("overviewScreen").style.display = "block";
+function goToOverview() {
+  document.getElementById("mainApp").style.display = "none";
+  document.getElementById("overviewScreen").style.display = "block";
 
-      const list = document.getElementById("overviewList");
-      list.innerHTML = "";
+  const list = document.getElementById("overviewList");
+  list.innerHTML = "";
 
-      allMoods.forEach((entry, index) => {
-        const li = document.createElement("li");
-        li.className = "overview-entry";
-        li.innerHTML = `
-          <strong>${entry.username}</strong> — ${entry.mood} <span style="font-size: 0.85em;">(${entry.timestamp})</span>
-          <div class="overview-details" id="details-${index}">
-            ${entry.comment ? `<p><strong>Comment:</strong> ${entry.comment}</p>` : ""}
-            ${entry.needHelp ? `<p class="help-box">Needs someone to check in</p>` : ""}
-            <p><strong>Contact:</strong> ${entry.contact}</p>
-          </div>
-        `;
-
-        li.addEventListener("click", () => {
-          const detailBox = document.getElementById(`details-${index}`);
-          detailBox.style.display = detailBox.style.display === "block" ? "none" : "block";
-        });
-
-        list.appendChild(li);
+  db.collection("moods").orderBy("timestamp", "desc").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc, index) => {
+      const entry = doc.data();
+      const li = document.createElement("li");
+      li.className = "overview-entry";
+      li.innerHTML = `
+        <strong>${entry.username}</strong> — ${entry.mood} <span style="font-size: 0.85em;">(${entry.timestamp})</span>
+        <div class="overview-details" id="details-${index}">
+          ${entry.comment ? `<p><strong>Comment:</strong> ${entry.comment}</p>` : ""}
+          ${entry.needHelp ? `<p class="help-box">Needs someone to check in</p>` : ""}
+          <p><strong>Contact:</strong> ${entry.contact}</p>
+        </div>
+      `;
+      li.addEventListener("click", () => {
+        const detailBox = document.getElementById(`details-${index}`);
+        detailBox.style.display = detailBox.style.display === "block" ? "none" : "block";
       });
-    }
+      list.appendChild(li);
+    });
+  });
+}
+
 
     function backToMain() {
       document.getElementById("overviewScreen").style.display = "none";
